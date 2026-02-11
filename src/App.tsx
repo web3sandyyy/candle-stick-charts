@@ -126,20 +126,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
+    <div className="min-h-screen bg-white text-gray-900 flex flex-col">
       {/* Header */}
-      <header className="border-b border-gray-200 bg-white">
-        <div className="px-4 py-3 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-900">Candlestick Chart Playground</h1>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleScreenshot}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              title="Screenshot"
-            >
-              <Camera className="w-5 h-5 text-gray-600" />
-            </button>
-          </div>
+      <header className="border-b border-gray-300 bg-white">
+        <div className="px-3 py-2 flex justify-between items-center">
+          <h1 className="text-lg font-semibold text-gray-900">Candlestick Chart</h1>
+          <button
+            onClick={handleScreenshot}
+            className="p-1 hover:bg-gray-100 transition-colors"
+            title="Screenshot"
+          >
+            <Camera className="w-4 h-4 text-gray-600" />
+          </button>
         </div>
       </header>
 
@@ -161,49 +159,49 @@ function App() {
         /> */}
 
         {/* Main content */}
-        <main className="flex-1 p-4 overflow-auto">
+        <main className="flex-1 overflow-auto">
           {/* Toolbar */}
-          <div className="mb-4 p-3 rounded-lg bg-white shadow-sm border border-gray-200 flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-2">
+          <div className="px-2 py-1 bg-gray-50 border-b border-gray-300 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-1">
               <button
                 onClick={() => setIndicatorModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors"
+                className="flex items-center gap-1 px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium transition-colors"
               >
-                <TrendingUp className="w-4 h-4" />
+                <TrendingUp className="w-3 h-3" />
                 Indicators
                 {selectedIndicators.length > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 text-xs bg-blue-400 rounded-full">
+                  <span className="ml-1 px-1 text-xs bg-gray-400 text-white">
                     {selectedIndicators.length}
                   </span>
                 )}
               </button>
               <button
                 onClick={() => setAppearanceModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 font-medium transition-colors"
+                className="flex items-center gap-1 px-2 py-1 border border-gray-300 hover:bg-gray-100 text-sm font-medium transition-colors"
               >
-                <Settings className="w-4 h-4" />
+                <Settings className="w-3 h-3" />
                 Appearance
               </button>
             </div>
 
             {/* Active Indicators Tags */}
             {selectedIndicators.length > 0 && (
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-1 flex-wrap">
                 {selectedIndicators.slice(0, 5).map(ind => (
                   <span
                     key={ind.id}
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700"
+                    className="inline-flex items-center gap-1 px-1 py-0.5 text-xs font-medium bg-gray-200 text-gray-700"
                   >
                     {ind.color && (
                       <span
-                        className="w-2 h-2 rounded-full"
+                        className="w-2 h-2"
                         style={{ backgroundColor: ind.color }}
                       />
                     )}
                     {ind.indicator}
                     <button
                       onClick={() => handleRemoveIndicator(ind.id)}
-                      className="ml-1 hover:text-red-500"
+                      className="ml-0.5 hover:text-red-500"
                     >
                       ×
                     </button>
@@ -218,26 +216,17 @@ function App() {
             )}
           </div>
 
-          <div className="mb-4 p-3 rounded-lg bg-white shadow-sm border border-gray-200 flex gap-6 text-sm">
-            <span>
-              <b className="text-gray-500">O:</b> {hoverData?.open.toFixed(2) ?? '0.00'}
-            </span>
-            <span>
-              <b className="text-gray-500">H:</b> {hoverData?.high.toFixed(2) ?? '0.00'}
-            </span>
-            <span>
-              <b className="text-gray-500">L:</b> {hoverData?.low.toFixed(2) ?? '0.00'}
-            </span>
-            <span>
-              <b className="text-gray-500">C:</b> {hoverData?.close.toFixed(2) ?? '0.00'}
-            </span>
-            <span>
-              <b className="text-gray-500">Vol:</b> {hoverData?.volume?.toLocaleString() ?? '0'}
-            </span>
+          {/* OHLC Display */}
+          <div className="px-2 py-1 bg-white border-b border-gray-300 flex gap-4 text-xs">
+            <span><b className="text-gray-500">O:</b> {hoverData?.open.toFixed(2) ?? '0.00'}</span>
+            <span><b className="text-gray-500">H:</b> {hoverData?.high.toFixed(2) ?? '0.00'}</span>
+            <span><b className="text-gray-500">L:</b> {hoverData?.low.toFixed(2) ?? '0.00'}</span>
+            <span><b className="text-gray-500">C:</b> {hoverData?.close.toFixed(2) ?? '0.00'}</span>
+            <span><b className="text-gray-500">Vol:</b> {hoverData?.volume?.toLocaleString() ?? '0'}</span>
           </div>
 
           {/* Chart */}
-          <div className="rounded-lg overflow-hidden bg-white shadow-sm border border-gray-200">
+          <div className="overflow-hidden bg-white">
             <CandleStickChart
               ref={chartRef}
               data={data}
@@ -252,12 +241,6 @@ function App() {
               onCrosshairMove={setHoverData}
               className="w-full"
             />
-          </div>
-
-          {/* Selected Tool Display */}
-          <div className="mt-4 p-3 rounded-lg bg-white shadow-sm border border-gray-200 text-sm">
-            <span className="text-gray-500">Selected Tool:</span>{" "}
-            <span className="font-medium text-gray-900 capitalize">{sidebar.selectedTool.replace("-", " ")}</span>
           </div>
         </main>
       </div>
