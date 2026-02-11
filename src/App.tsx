@@ -9,7 +9,7 @@ import {
 } from "./components/charts/candlestickchart";
 import { IndicatorPickerModal, AppearanceModal, type SelectedIndicator } from "./components/modals";
 // import { LeftSidebar } from "./components/sidebar";
-import { useSidebar } from "./hooks/useSidebar";
+// import { useSidebar } from "./hooks/useSidebar";
 import { Settings, TrendingUp, Camera } from "lucide-react";
 import "./App.css";
 
@@ -51,7 +51,7 @@ function App() {
   const data = useMemo(() => generateSampleData(200), []);
 
   // Sidebar state
-  const sidebar = useSidebar();
+  // const sidebar = useSidebar();
 
   // Modal states
   const [indicatorModalOpen, setIndicatorModalOpen] = useState(false);
